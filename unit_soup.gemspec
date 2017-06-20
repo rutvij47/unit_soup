@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Easily define rules of conversion between similar units}
   spec.description   = %q{Easily define rules of conversion between similar units}
-  spec.homepage      = "rutvijshah.com"
+  spec.homepage      = "http://www.rutvijshah.com"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
