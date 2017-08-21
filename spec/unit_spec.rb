@@ -43,7 +43,21 @@ describe ".new" do
     end
 
     it "should equal cm" do
-      expect(cm).to eq(Unit.new(:cm)) 
+      expect(cm).to eq(Unit.new(:cm))
+    end
+  end
+
+  describe "to_s" do
+    cm = Unit.new(:cm)
+    it "should equal string cm" do
+      expect(cm.to_s).to eq("cm")
+    end
+  end
+
+  describe "to_sym" do
+    cm = Unit.new("cm")
+    it "should equal sym cm" do
+      expect(cm.to_sym).to eq(:cm)
     end
   end
 end

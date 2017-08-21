@@ -16,6 +16,10 @@ module UnitSoup
       symbol.to_s
     end
 
+    def to_sym
+      symbol.to_sym
+    end
+
     def ==(o)
       symbol == o.symbol
     end
