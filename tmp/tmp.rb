@@ -78,7 +78,7 @@ Convertible::Set.from/with/union (Convertible::SetDefinition::Metric, dollar_uni
 my_set.add(dollar_units).
 
 
-algo
+# algo
 @lookup @graph
 convert(measurement, from, to)
   return from lookup if lookup has from, to factor
@@ -92,8 +92,52 @@ when rules change
         graph[this][that]=factor
         graph[that][this]=1/factor
 
+# classes
 Rule = Measurement - Measurement
-Measurement = Amount Unit
-Unit(string)
-Amount(double)
+Measurement = Amount.to_r Unit
+Unit(to_sym, symbols)
+Amount(to_r)
 Soup = set<rule>
+
+Soup
+ @mix = Mix.new(name)
+  @units = []
+  @rules = []
+ @symbols_map = {:symbol => unit}
+ @lookup
+ @graph
+
+
+# brainstorming unit singletons
+mix << rules
+mix[:unit].symbols << :cms
+soup.prepare
+soup.unit[:unit].same_as :longer_name
+soup.make
+soup = Soup.new("mysoup", mix1, mix2)
+soup << mix3
+soup << rule1, rule2, mix
+soup.unit(:unit).field
+soup.units[:unit].symbols
+
+
+
+# unit additional functionality
+:singular, :plural,
+def initialize(options={})
+  @symbols = []
+  @name = options[:name].to_sym if options[:name]
+  @singular = options[:singular].to_sym if options[:singular]
+  @plural = options[:plural].to_sym if options[:plural]
+  @symbol = options[:use].to_sym if options[:use]
+  @symbol = options[:symbol].to_sym if @symbol.nil? && options[:symbol]
+  @symbol = options[:preffered].to_sym if @symbol.nil? && options[:preffered]
+  @symbols += options[:aliases] if options[:aliases]
+  @symbols += options[:symbols] if options[:symbols]
+end
+
+def symbols
+  (@symbols + [@name, @singular, @plural, @symbol]).reject{|s|s.blank?}.sort.uniq
+end
+
+alias_method :preffered, :symbol
