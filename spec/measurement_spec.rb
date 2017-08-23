@@ -43,9 +43,12 @@ describe "Measurement" do
 
   describe "==" do
     m = Measurement.from("2.5 cm")
+    it "should equal another with same values" do
+      expect(m).to eq(Measurement.new(5/2.to_r, "cm"))
+    end
 
-    it "shouold equal another with same values" do
-      expect(m).to eq(Measurement.new(5/2, "cm"))
+    it "should not equal different values" do
+      expect(m).to_not eq(Measurement.new(3/2.to_r, "cm"))
     end
   end
 
@@ -62,8 +65,12 @@ describe "Measurement" do
       expect(Measurement.valid?("3/5 cm")).to be(true)
     end
 
+    it "should be valid for rational amount" do
+      expect(Measurement.valid?("3.3/5 cm")).to be(true)
+    end
+
     it "should be invalid for invalid format" do
-      expect(Measurement.valid?("invalid string 2 cm")).to be(true)
+      expect(Measurement.valid?("invalid string 2 cm")).to be(false)
     end
   end
 end

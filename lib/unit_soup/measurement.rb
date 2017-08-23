@@ -4,7 +4,8 @@ include UnitSoup
 
 module UnitSoup
   class Measurement
-    @@measurement_format = %r{(\d+|\d+.\d+|\d+/d+)([[:alpha:]]+)}
+    # captures "(num)(symbol)" where num = decimal|integer|fraction
+    @@measurement_format = %r{^(\d+|\d+\.\d+|\d+/[1-9]+|\d+\.\d+/[1-9]+)([[:alpha:]]+)$}
 
     def self.valid?(str)
       str && !str.to_s.gsub("\s", "").match(@@measurement_format).nil?
@@ -23,7 +24,7 @@ module UnitSoup
         raise ArgumentError.new("No argument provided") unless str
         str = str.to_s
         match_data = str.to_s.gsub("\s", "").match(@@measurement_format)
-        raise ArgumentError.new("Format: 12 inch") unless match_data        
+        raise ArgumentError.new("Format: 12 inch") unless match_data
         @amount = match_data[1].to_r
         @unit = Unit.new(match_data[2])
       else
@@ -37,8 +38,7 @@ module UnitSoup
     end
 
     def ==(o)
-      amount == o.amount
-      unit == o.unit
+      amount == o.amount && unit == o.unit
     end
 
     def hash
