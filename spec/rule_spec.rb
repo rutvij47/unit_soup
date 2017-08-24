@@ -51,8 +51,14 @@ describe "Rule" do
       expect {Rule.new("hello world")}.to raise_error ArgumentError
     end
 
-    it "initializes" do
+    it "initializes from string" do
       expect(Rule.new("1 foo = 3 bar")).to_not be_nil
+    end
+
+    it "initializes from another rule" do
+      r = Rule.new(Rule.new("1 foo = 3 bar"))
+      expect(r.this_measurement).to eq(Measurement.new(1, :foo))
+      expect(r.that_measurement).to eq(Measurement.new(3, :bar))
     end
   end
 
@@ -65,7 +71,7 @@ describe "Rule" do
       expect {Rule.from("hello world")}.to raise_error ArgumentError
     end
 
-    it "initializes" do
+    it "initializes from string" do
       expect(Rule.from("1 foo = 3 bar")).to_not be_nil
     end
   end

@@ -31,6 +31,15 @@ describe "Measurement" do
         expect(m.unit).to eq(Unit.new(:cm))
       end
     end
+
+    describe "from measurement" do
+      m = Measurement.new(Measurement.new(2, :cm))
+
+      it "should have initialized from measurement" do
+        expect(m.amount).to eq(2)
+        expect(m.unit.symbol).to eq(:cm)
+      end
+    end
   end
 
   describe "to_s" do

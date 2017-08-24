@@ -20,13 +20,18 @@ module UnitSoup
     def initialize(*args)
       case args.length
       when 1
-        str = args[0]
-        raise ArgumentError.new("No argument provided") unless str
-        str = str.to_s
-        match_data = str.to_s.gsub("\s", "").match(@@measurement_format)
-        raise ArgumentError.new("Format: 12 inch") unless match_data
-        @amount = match_data[1].to_r
-        @unit = Unit.new(match_data[2])
+        if args[0].is_a? Measurement
+          @amount = args[0].amount
+          @unit = args[0].unit
+        else
+          str = args[0]
+          raise ArgumentError.new("No argument provided") unless str
+          str = str.to_s
+          match_data = str.to_s.gsub("\s", "").match(@@measurement_format)
+          raise ArgumentError.new("Format: 12 inch") unless match_data
+          @amount = match_data[1].to_r
+          @unit = Unit.new(match_data[2])
+        end
       else
         @amount = args[0].to_r
         @unit = Unit.new(args[1].to_sym)
