@@ -42,7 +42,11 @@ module UnitSoup
       "#{amount} #{unit}"
     end
 
-    def ==(o)
+    def ==(o)      
+      amount == o.amount && unit == o.unit
+    end
+
+    def eql?(o)
       amount == o.amount && unit == o.unit
     end
 

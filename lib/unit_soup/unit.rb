@@ -24,6 +24,10 @@ module UnitSoup
       symbol == o.symbol
     end
 
+    def eql?(o)
+      symbol == o.symbol
+    end
+
     def hash
       symbol.hash
     end

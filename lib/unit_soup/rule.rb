@@ -38,6 +38,10 @@ module UnitSoup
       this_measurement == o.this_measurement && that_measurement == o.that_measurement
     end
 
+    def eql?(o)
+      this_measurement == o.this_measurement && that_measurement == o.that_measurement
+    end
+
     def hash
       to_s.hash
     end
