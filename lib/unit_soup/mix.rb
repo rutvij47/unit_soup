@@ -14,15 +14,18 @@ module UnitSoup
 
     attr_reader :name, :rules
 
-    def initialize(name)
+    def initialize(name, &block)
       @name = name
       @rules = Set.new
+      if(block)
+        block.arity < 1 ? instance_eval(&block) : block.call(self)
+      end
     end
 
     def <<(arg)
       new_rules = []
       if arg.is_a? Mix
-        new_rules << arg.rules
+        new_rules += arg.rules.to_a
       elsif arg.is_a? Rule
         new_rules << arg
       elsif arg.is_a? Enumerable

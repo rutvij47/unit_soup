@@ -33,7 +33,7 @@ module UnitSoup
           @unit = Unit.new(match_data[2])
         end
       else
-        @amount = args[0].to_r
+        @amount = args[0].rationalize
         @unit = Unit.new(args[1].to_sym)
       end
     end
@@ -42,7 +42,7 @@ module UnitSoup
       "#{amount} #{unit}"
     end
 
-    def ==(o)      
+    def ==(o)
       amount == o.amount && unit == o.unit
     end
 
