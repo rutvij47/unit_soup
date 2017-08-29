@@ -69,7 +69,7 @@ module UnitSoup
           while(curr.parent) do
             chain.unshift curr.parent
             curr = curr.parent
-          end          
+          end
           return chain.map{|c|c.measurement.amount}.inject(1){|m1,m2| m1 * m2}
         else
           queue += @graph[parent.measurement.unit].map{|m| Struct::Child.new(m, parent)}

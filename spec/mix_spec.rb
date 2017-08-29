@@ -57,7 +57,7 @@ describe "Mix" do
     it "can filter dupes" do
       expect(mix.rules.length).to eql 2
       mix << "1foo = 2bar"
-      mix << "1 bar = 100 baz"      
+      mix << "1 bar = 100 baz"
       expect(mix.rules.length).to eql 2
     end
   end
