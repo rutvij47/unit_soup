@@ -33,7 +33,7 @@ module UnitSoup
           @unit = Unit.new(match_data[2])
         end
       else
-        @amount = args[0].rationalize
+        @amount = args[0].is_a?(String) ? args[0].to_r : args[0].rationalize
         @unit = Unit.new(args[1].to_sym)
       end
     end
