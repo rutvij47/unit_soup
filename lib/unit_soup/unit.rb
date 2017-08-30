@@ -1,30 +1,35 @@
 module UnitSoup
 
   class Unit
-    attr_reader :name, :singular, :plural, :preffered
+    attr_reader :name, :symbol
 
-    def initialize(name)
-      @symbols = []
+    def initialize(symbol)
+      @symbol = symbol.to_sym
+      @name = @symbol.to_sym
+    end
+
+    def name=(name)
       @name = name.to_sym
     end
 
-    def initialize(options={})
-      @symbols = []
-      @name = options[:name].to_sym unless options[:name].blank?
-      @singular = options[:singular].to_sym unless options[:singular].blank?
-      @plural = options[:plural].to_sym unless options[:plural].blank?
-      @preffered = options[:use].to_sym unless options[:use].blank?
-      @preffered = options[:preffered].to_sym unless @preffered || options[:preffered].blank?
-      @symbols += options[:aliases] if options[:aliases]
-      @symbols += options[:symbols] if options[:symbols]
+    def to_s
+      symbol.to_s
     end
 
-    def symbols
-      (@symbols + [@name, @singular, @plural, @preffered]).reject{|s|s.blank?}.sort.uniq
+    def to_sym
+      symbol.to_sym
     end
 
-    def preffered
-      @preffered
+    def ==(o)
+      symbol == o.symbol
+    end
+
+    def eql?(o)
+      symbol == o.symbol
+    end
+
+    def hash
+      symbol.hash
     end
   end
 end
