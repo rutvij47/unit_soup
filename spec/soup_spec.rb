@@ -6,26 +6,30 @@ require "unit_soup/soup"
 include UnitSoup
 
 describe "Soup" do
-  # describe ".new" do
-  #   # s = Soup.new "test_soup"
-  #   # it "should initialize with name" do
-  #   #   expect(s.name).to eq("test_soup")
-  #   # end
-  # end
-  #
-  # describe "adding" do
-  #   describe "mix" do
-  #
-  #   end
-  #
-  #   describe "rules" do
-  #
-  #   end
-  # end
-  #
-  # describe "make" do
-  #
-  # end
+  describe ".new" do
+    s = Soup.new "test_soup"
+    it "should initialize with name" do
+      expect(s.name).to eq("test_soup")
+    end
+  end
+
+  describe "adding" do
+    soup = Soup.new "Add soup"
+
+    describe "mix" do
+      soup << Mix.new("test") do |m|
+        m << "1 foo = 2 bar"
+        m << "2 bar = 3 baz"
+      end
+      soup << ["3 foo = 4 car", "4 car = 5 bar"]
+      soup << Rule.new("3 car = 4 bikes")
+      soup << "3 bikes = 4 foo"
+
+      it "should have rules added from mix, array and individually" do
+        expect(soup.rules.length).to be(6)
+      end
+    end
+  end
 
   describe "convert" do
 
@@ -67,15 +71,6 @@ describe "Soup" do
         expect(coffee_per_month).to eql(80.rationalize)
         expect(coffee_per_year).to eql(80*12.rationalize)
       end
-
     end
   end
-
-  # describe "conversion factor" do
-  #
-  # end
-  #
-  # describe "conversion chain" do
-  #
-  # end
 end
