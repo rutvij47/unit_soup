@@ -5,7 +5,7 @@ include UnitSoup
 module UnitSoup
   class Measurement
     # captures "(num)(symbol)" where num = decimal|integer|fraction
-    @@measurement_format = %r{^(\d+|\d+\.\d+|\d+/[1-9]+|\d+\.\d+/[1-9]+)([[:alpha:]]+)$}
+    @@measurement_format = %r{^(\d+|\d+\.\d+|\d+/[1-9]+|\d+\.\d+/[1-9]+)([a-zA-Z_]+)$}
 
     def self.valid?(str)
       str && !str.to_s.gsub("\s", "").match(@@measurement_format).nil?
