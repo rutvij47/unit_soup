@@ -60,6 +60,12 @@ describe "Rule" do
       expect(r.this_measurement).to eq(Measurement.new(1, :foo))
       expect(r.that_measurement).to eq(Measurement.new(3, :bar))
     end
+
+    it "initializes from two measurements" do
+      r = Rule.new("1 foo", Measurement.new(3, :bar))
+      expect(r.this_measurement).to eq(Measurement.new(1, :foo))
+      expect(r.that_measurement).to eq(Measurement.new(3, :bar))
+    end
   end
 
   describe ".from" do
@@ -82,7 +88,7 @@ describe "Rule" do
     end
   end
 
-  describe "measurements" do
+  describe "measurement" do
     r = Rule.new("1 foo = 3 bar")
     it "parses measurements correctly" do
       expect(r.this_measurement).to eq(Measurement.new(1, :foo))

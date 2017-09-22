@@ -17,16 +17,23 @@ module UnitSoup
 
     attr_reader :this_measurement, :that_measurement
 
-    def initialize(r)
-      raise ArgumentError.new("No argument provided") unless r
-      if r.is_a? Unit
-        @this_measurement = Measurement.new r.this_measurement
-        @that_measurement = Measurement.new r.that_measurement
+    def initialize(*args)
+      case args.length
+      when 1
+        r = args[0]
+        raise ArgumentError.new("No argument provided") unless r
+        if r.is_a? Rule
+          @this_measurement = Measurement.new r.this_measurement
+          @that_measurement = Measurement.new r.that_measurement
+        else
+          strs = r.to_s.split '='
+          raise ArgumentError.new("Format: 12 inch = 1 foot") unless strs.length == 2
+          @this_measurement = Measurement.new strs[0]
+          @that_measurement = Measurement.new strs[1]
+        end
       else
-        strs = r.to_s.split '='
-        raise ArgumentError.new("Format: 12 inch = 1 foot") unless strs.length == 2
-        @this_measurement = Measurement.new strs[0]
-        @that_measurement = Measurement.new strs[1]
+        @this_measurement = Measurement.new(args[0])
+        @that_measurement = Measurement.new(args[1])
       end
     end
 
