@@ -3,9 +3,9 @@ module UnitSoup
   class Unit
     attr_reader :name, :symbol
 
-    def initialize(symbol)
+    def initialize(name=nil, symbol)
       @symbol = symbol.to_sym
-      @name = @symbol.to_sym
+      @name = name.nil? ? @symbol.to_sym : name.to_sym
     end
 
     def name=(name)
