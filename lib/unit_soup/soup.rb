@@ -44,7 +44,7 @@ module UnitSoup
         @lookup[[r.that_measurement.unit, r.this_measurement.unit]] = that_in_this
 
         # build graph
-        # rule "3 foo = 4 bar" represented as {foo => 4/3 bar, bar => 3/4 foo}
+        # rule "3 foo = 4 bar" represented as {foo => [4/3 bar], bar => [3/4 foo]}
         @graph[r.this_measurement.unit] = Set.new unless @graph.include?(r.this_measurement.unit)
         @graph[r.this_measurement.unit] << this_in_that
         @graph[r.that_measurement.unit] = Set.new unless @graph.include?(r.that_measurement.unit)
@@ -57,22 +57,29 @@ module UnitSoup
       to = Unit.new(to)
       return nil unless @units.include?(from) && @units.include?(to)
       return (value * (@lookup[[from, to]]).amount) if @lookup.include? [from, to]
-      # bfs graph from from-to. When found, take path, collect factors
+      # bfs graph from from-to. When found, walk through parent path and multiply all conversion factors.
       Struct.new("Child", :measurement, :parent)
       queue = [Struct::Child.new(Measurement.new(value, from), nil)]
       while !queue.empty? do
         parent = queue.first
+        # Find all measurement matches
+        # e.g. if graph[:from] = ["3/4 :foo", "4/5 :bar", "3/1 :to", "5/1 :to"]
+        #    then matches = ["3/1 :to", "5/1 :to"]
+        #    Since there are two valid rules to convert :from -> :to, we pick the first one
         matches = @graph[parent.measurement.unit].select{|m|m.unit == to}
         if(matches.size > 0)
-          chain = [Struct::Child.new(matches.first, parent)]
+          # create the chain [from, a, b, c, to], starting with 'to' and building back
+          chain_from_to = [Struct::Child.new(matches.first, parent)]
           curr = chain.first
           while(curr.parent) do
-            chain.unshift curr.parent
+            chain_from_to.unshift curr.parent # add current parent to front of chain
             curr = curr.parent
           end
-          return chain.map{|c|c.measurement.amount}.inject(1){|m1,m2| m1 * m2}
+          return chain_from_to.map{|c|c.measurement.amount}.inject(1){|m1,m2| m1 * m2}
         else
-          queue += @graph[parent.measurement.unit].map{|m| Struct::Child.new(m, parent)}
+          children = @graph[parent.measurement.unit]
+          children_not_in_queue = children.reject{|m| queue.include? m}
+          queue += children_not_in_queue.map{|m| Struct::Child.new(m, parent)}
           queue.shift
         end
       end
