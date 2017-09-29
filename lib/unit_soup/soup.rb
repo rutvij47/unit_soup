@@ -70,7 +70,7 @@ module UnitSoup
         if(matches.size > 0)
           # create the chain [from, a, b, c, to], starting with 'to' and building back
           chain_from_to = [Struct::Child.new(matches.first, parent)]
-          curr = chain.first
+          curr = chain_from_to.first
           while(curr.parent) do
             chain_from_to.unshift curr.parent # add current parent to front of chain
             curr = curr.parent
