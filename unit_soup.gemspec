@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Rutvij"]
   spec.email         = ["code@rutvijshah.com"]
 
-  spec.summary       = %q{A DRY approach to unit conversion}
-  spec.description   = %q{Define rules, make soup, convert.}
+  spec.summary       = %q{A DRY approach to unit conversion.}
+  spec.description   = %q{A DRY approach to unit conversion. Define rules, make soup, convert.}
   spec.homepage      = "http://www.rutvijshah.com"
   spec.license       = "MIT"
 
