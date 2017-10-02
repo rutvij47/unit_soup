@@ -11,8 +11,8 @@ module UnitSoup
       str && !str.to_s.gsub("\s", "").match(@@measurement_format).nil?
     end
 
-    def self.from(str)
-      self.new str
+    def self.from(*args)
+      self.new *args
     end
 
     attr_reader :amount, :unit
