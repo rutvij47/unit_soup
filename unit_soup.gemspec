@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["code@rutvijshah.com"]
 
   spec.summary       = %q{A DRY approach to unit conversion}
-  spec.description   = %q{A DRY approach to unit conversion}
+  spec.description   = %q{Define rules, make soup, convert.}
   spec.homepage      = "http://www.rutvijshah.com"
   spec.license       = "MIT"
 
@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", '~> 3.5', '>= 3.5.0'
 end
