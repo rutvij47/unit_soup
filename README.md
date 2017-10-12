@@ -194,7 +194,7 @@ end
   | meter | <--- | centimeter | <--- | inch | <--- | foot |
   +-------+      +------------+      +------+      +------+
 
-  200 * lookup[:foot][:inch] * lookup[:inch][:centimeter] * lookup[:centimeter][meter]
+  200 * lookup[:foot][:inch] * lookup[:inch][:centimeter] * lookup[:centimeter][:meter]
   ```
 
   This conversion fraction is also saved in `lookup[:foot][:meter]` and `lookup[:meter][:foot]` so the next conversion from `foot` to `meter` does not perform a graph traversal.
